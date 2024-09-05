@@ -1,6 +1,4 @@
 import os
-import getpass
-import bs4
 import chromadb
 from langchain import hub
 from langchain_community.document_loaders import WebBaseLoader

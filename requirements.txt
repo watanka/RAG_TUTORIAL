@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain_openai
+langchain_core
+langchain_chroma
+langchain_community
+chromadb>=0.4.0
+langchain_text_splitters
+bs4
