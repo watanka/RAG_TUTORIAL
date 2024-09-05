@@ -106,6 +106,7 @@ conversational_qa_chain = (
 )
 chain = conversational_qa_chain.with_types(input_type=ChatHistory)
 
+
 app = FastAPI(
     title="LangChain Server",
     version="1.0",

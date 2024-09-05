@@ -2,7 +2,8 @@ RAG 구조
 ![](rag_diagram.png)
 
 진행방향
-1. Data Collection
+1. Data Collection <-
+    - naver 뉴스 api에서 실시간 top 10위 뉴스를 긁어오자.
 2. Data Embedding
 3. Vector DB 구성 (Retrieval, Indexing)
 4. LLM 설정
@@ -13,4 +14,3 @@ RAG 구조
 Prompt
 
 
-TODO
