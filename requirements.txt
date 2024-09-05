@@ -1,5 +1,6 @@
 streamlit
 langchain
+langserve[all]
 langchain_openai
 langchain_core
 langchain_chroma
