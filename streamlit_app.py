@@ -1,7 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 from langserve import RemoteRunnable
-
+from server import chain
 
 load_dotenv()
 
@@ -9,8 +9,8 @@ st.title("Echo Bot")
 
 chain_url = "http://localhost:8000/"
 
-st.session_state.remote_runnable = RemoteRunnable(chain_url)
-
+# st.session_state.remote_runnable = RemoteRunnable(chain_url)
+st.session_state.rag = chain
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -33,7 +33,7 @@ if prompt := st.chat_input('what is up?'):
     with st.chat_message('assistant'):
         message_placeholder = st.empty()
 
-        stream = st.session_state['remote_runnable'].invoke(
+        stream = st.session_state.rag.invoke(
             {"question": prompt, 
              "chat_history": [(msg['role'], msg['content']) 
                               for msg in st.session_state.messages

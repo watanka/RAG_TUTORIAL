@@ -1,5 +1,10 @@
 .env
+<<<<<<< HEAD
 .venv
 chroma
 __pycache__
 *.sqlite3
+=======
+chroma
+__pycache__
+>>>>>>> 54397e79a50f824f89b63fbf006d0c403367439c
