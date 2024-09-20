@@ -13,16 +13,14 @@ from operator import itemgetter
 from typing import List, Tuple
 from dotenv import load_dotenv
 from fastapi import FastAPI
-import chromadb
-from langchain_community.vectorstores import FAISS
+from pydantic import BaseModel, Field
 from langchain_chroma import Chroma
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate, format_document
 from langchain_core.runnables import RunnableMap, RunnablePassthrough
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langsmith import traceable
 
-from langserve import add_routes
-from langserve.pydantic_v1 import BaseModel, Field
 
 load_dotenv()
 
@@ -62,18 +60,15 @@ def _format_chat_history(chat_history: List[Tuple]) -> str:
         buffer += "\n" + "\n".join([human, ai])
     return buffer
 
-embedding = OpenAIEmbeddings()
-persist_directory = 'db'
-persistent_client = chromadb.PersistentClient()
+embedding = OpenAIEmbeddings(model="text-embedding-3-large")
 
 
-vectorstore = Chroma.from_texts([
-    "2024년 09월 04일, 나는 지금 스파르타 AI 필진을 위한 글을 작성중에 있어. 내 이름은 신은성이야.",
-],
-        client=persistent_client,
-        embedding=embedding,
-        persist_directory=persist_directory
+vectorstore = Chroma(
+    collection_name="real_estate",
+    embedding_function = embedding,
+    persist_directory="./real_estate"
 )
+
 retriever = vectorstore.as_retriever()
 
 _inputs = RunnableMap(
@@ -101,24 +96,8 @@ class ChatHistory(BaseModel):
     question: str
 
 
+
 conversational_qa_chain = (
     _inputs | _context | ANSWER_PROMPT | ChatOpenAI() | StrOutputParser()
 )
 chain = conversational_qa_chain.with_types(input_type=ChatHistory)
-
-
-app = FastAPI(
-    title="LangChain Server",
-    version="1.0",
-    description="Spin up a simple api server using Langchain's Runnable interfaces",
-)
-# Adds routes to the app for using the chain under:
-# /invoke
-# /batch
-# /stream
-add_routes(app, chain, enable_feedback_endpoint=True)
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="localhost", port=8000)
