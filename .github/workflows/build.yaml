@@ -34,10 +34,6 @@ jobs:
             echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> .env
             echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> .env
       
-      - name: copy to server
-        run: |
-          pwd
-          scp .env real-estate-newsletter-admin@52.78.17.127:.env
 
       - name: Build Docker image
         run: |
