@@ -46,8 +46,8 @@ jobs:
       - name: Build Docker image
         run: |
           docker-compose -f docker-compose.yaml build
-          docker tag rag_tutorial-app_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rag_tutorial-app_service:latest
-          docker tag rag_tutorial-scheduled_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rag_tutorial-scheduled_service:latest
+          docker tag rag_tutorial-app_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
+          docker tag rag_tutorial-scheduled_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
 
       - name: Push Docker image to ECR
         run: |
