@@ -14,7 +14,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v1
+  
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose-plugin
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -35,6 +40,7 @@ jobs:
             echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
             echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
       
+        
 
       - name: Build Docker image
         run: |
