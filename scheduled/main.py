@@ -1,6 +1,6 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
-from jobs import daily_update
+from src.jobs import daily_update
 
 # 스케줄러 설정
 scheduler = BackgroundScheduler()

@@ -1,11 +1,11 @@
 from langchain_openai import OpenAIEmbeddings
-from repository import ChromaRepository
+from src.repository import ChromaRepository
 
 from langchain_core.documents import Document
-from crawl import TrafilaturaCrawler
+from src.crawl import TrafilaturaCrawler
 from langchain_chroma import Chroma
-from data_handle import ChromaDataHandler
-from update_db import ChromaDailyUpdater
+from src.preprocess import ChromaDataHandler
+from src.update_db import ChromaDailyUpdater
 from dotenv import load_dotenv
 
 

@@ -10,5 +10,9 @@ def subscribe_email(email: str):
     print("email has been registered to our list " + email)
 
 
+@app.post('/unsubscribe')
+def unsubscribe_email(email: str):
+    print("email has been removed from our list " + email)
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
