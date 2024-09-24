@@ -29,10 +29,11 @@ jobs:
 
       - name: Create .env file
         run: |
-            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> ~/scheduled/.env
-            echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> ~/scheduled/.env
-            echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> ~/scheduled/.env
-            echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> ~/scheduled/.env
+            pwd
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> ~/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+            echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> ~/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+            echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> ~/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+            echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> ~/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
       
 
       - name: Build Docker image
