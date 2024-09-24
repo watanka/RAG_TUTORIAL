@@ -28,8 +28,7 @@ jobs:
       
       - name: Pull Docker image from ECR
         run: |
-          docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rag_tutorial-app_service:latest
-          docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rag_tutorial-scheduled_service:latest
+          docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
         continue-on-error: false
       
       - name: Deploy to EC2
