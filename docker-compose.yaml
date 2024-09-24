@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:8000"  # 필요 시 포트 매핑
 
-  scheduled:
+  scheduled_service:
     build:
       context: ./scheduled
       dockerfile: Dockerfile
