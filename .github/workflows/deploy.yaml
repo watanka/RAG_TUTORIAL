@@ -33,4 +33,5 @@ jobs:
       
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no real-estate-newsletter-admin@52.78.17.127 "docker-compose pull && docker-compose up -d --remove-orphans"
+          docker-compose pull
+          docker-compose up -d --remove-orphans
