@@ -1,10 +1,24 @@
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
 from repository import SQLiteEmailDatabase, DynamoDBEmailDatabase, EmailRepository
 
 app = FastAPI()
+
+origins = [
+    "http://realestate.newsletter.bucket.s3-website.ap-northeast-2.amazonaws.com",  # S3의 HTTPS URL로 변경
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # 사용할 데이터베이스 선택 (SQLite 또는 DynamoDB)
 db_instance = DynamoDBEmailDatabase("real-estate-newsletter-email-table")  # 또는 SQLiteEmailDatabase("emails.db")
 

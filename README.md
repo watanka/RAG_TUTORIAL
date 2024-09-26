@@ -14,3 +14,6 @@ RAG 구조
 Prompt
 
 
+
+
+- [ ] : https 붙이기
