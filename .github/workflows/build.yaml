@@ -1,54 +1,54 @@
-# name: Build and Push to ECR
+name: Build and Push to ECR
 
-# on:
-#   push:
-#     branches:
-#       - master
+on:
+  push:
+    branches:
+      - master
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v1
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
   
-#       - name: Install Docker Compose
-#         run: |
-#           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#           sudo chmod +x /usr/local/bin/docker-compose
-#           docker-compose --version
+      # - name: Install Docker Compose
+      #   run: |
+      #     sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #     sudo chmod +x /usr/local/bin/docker-compose
+      #     docker-compose --version
 
-#       - name: Configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ secrets.AWS_REGION }}
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
 
-#       - name: Log in to Amazon ECR
-#         run: |
-#           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      # - name: Log in to Amazon ECR
+      #   run: |
+      #     aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-#       - name: Create .env file
-#         run: |
-#             pwd
-#             echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-#             echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-#             echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-#             echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+      # - name: Create .env file
+      #   run: |
+      #       pwd
+      #       echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+      #       echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+      #       echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+      #       echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
       
         
 
-#       - name: Build Docker image
-#         run: |
-#           docker-compose -f docker-compose.yaml build
-#           docker tag rag_tutorial-app_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
-#           docker tag rag_tutorial-scheduled_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
+      # - name: Build Docker image
+      #   run: |
+      #     docker-compose -f docker-compose.yaml build
+      #     docker tag rag_tutorial-app_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
+      #     docker tag rag_tutorial-scheduled_service:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
 
-#       - name: Push Docker image to ECR
-#         run: |
-#           docker push ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
+      # - name: Push Docker image to ECR
+      #   run: |
+      #     docker push ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
