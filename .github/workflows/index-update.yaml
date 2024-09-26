@@ -1,0 +1,29 @@
+name: Upload index.html to S3
+
+on:
+  push:
+    paths:
+      - "index.html"  # index.html 파일 경로를 설정
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Compare index.html with S3
+        run: |
+          aws s3 cp s3://realestate.newsletter.bucket/index.html ./index_s3.html || echo "File not found in S3"
+          if ! cmp -s index.html index_s3.html; then
+            echo "File has changed, proceeding to upload."
+            echo "upload=true" >> $GITHUB_ENV
+          else
+            echo "File is identical, skipping upload."
+            echo "upload=false" >> $GITHUB_ENV
+
+      - name: Upload to S3 (if changed)
+        if: env.upload == 'true'
+        run: |
+          aws s3 cp index.html s3://realestate.newsletter.bucket/index.html
