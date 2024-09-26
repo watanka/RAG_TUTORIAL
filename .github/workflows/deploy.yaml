@@ -44,5 +44,5 @@ jobs:
           # ECR에서 최신 이미지 pull
           sudo docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
           # docker-compose로 컨테이너 시작
-          sudo docker-compose up -d
+          cd ./RAG_TUTORIAL && sudo docker-compose up -d
           EOF
