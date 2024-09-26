@@ -34,14 +34,15 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@52.78.17.127 << EOF
           # AWS ECR 로그인 (GitHub Secrets에 AWS 관련 정보를 설정)
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_URL }}
-
+          
+          git clone https://github.com/watanka/RAG_TUTORIAL.git  || (cd ./RAG_TUTORIAL && git pull)
           # 기존 컨테이너 중지 및 이미지 삭제            
           docker-compose down
           docker system prune -f
 
 
           # ECR에서 최신 이미지 pull
-          docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
+          sudo docker pull ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/eunsung-ecr:latest
           # docker-compose로 컨테이너 시작
-          docker-compose up -d
+          sudo docker-compose up -d
           EOF
