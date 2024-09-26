@@ -31,7 +31,7 @@ jobs:
       
       - name: Connect to EC2 and Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no real-estate-newsletter-admin@52.78.17.127 << EOF
+          ssh -o StrictHostKeyChecking=no ec2-user@52.78.17.127 << EOF
           # AWS ECR 로그인 (GitHub Secrets에 AWS 관련 정보를 설정)
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_URL }}
 
