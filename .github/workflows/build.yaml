@@ -36,13 +36,24 @@ jobs:
       - name: Create .env file
         run: |
             pwd
-            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-            echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-            echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
-            echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/scheduled/.env
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "LANGCHAIN_TRACING_V2=${{ secrets.LANGCHAIN_TRACING_V2 }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "LANGCHAIN_PROJECT=${{ secrets.PROJECT_NAME }}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID}}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY}}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
+            echo "AWS_DEFAULT_REGION=${{ secrets.AWS_REGION}}" >> /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env
       
-        
-
+            - name: Set up SSH
+            run: |
+              mkdir -p ~/.ssh
+              echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+              chmod 600 ~/.ssh/id_rsa
+              ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Copy files to EC2
+        run: |
+              scp -o StrictHostKeyChecking=no -r /home/runner/work/RAG_TUTORIAL/RAG_TUTORIAL/.env ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/RAG_TUTORIAL/.env
       - name: Build Docker image
         run: |
           docker-compose -f docker-compose.yaml build

@@ -7,8 +7,29 @@ services:
       dockerfile: Dockerfile
     container_name: app_service
     restart: always
+    env_file:
+      - .env
     ports:
       - "8000:8000"  # 필요 시 포트 매핑
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/cert:/etc/letsencrypt
+      - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem
+      - /var/www/certbot:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app_service
+    networks:
+      - webnet
 
   scheduled_service:
     build:
@@ -16,3 +37,14 @@ services:
       dockerfile: Dockerfile
     container_name: scheduled_service
     restart: always
+  
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./nginx/cert:/etc/letsencrypt
+      - /var/www/certbot:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew; done'"
+
+# networks:
+#   webnet:

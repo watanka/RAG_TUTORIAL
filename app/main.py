@@ -8,7 +8,7 @@ from repository import SQLiteEmailDatabase, DynamoDBEmailDatabase, EmailReposito
 app = FastAPI()
 
 origins = [
-    "http://realestate.newsletter.bucket.s3-website.ap-northeast-2.amazonaws.com",  # S3의 HTTPS URL로 변경
+    "boodongsan-news.com",  # S3의 HTTPS URL로 변경
 ]
 
 app.add_middleware(
