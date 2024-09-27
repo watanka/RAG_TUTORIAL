@@ -8,7 +8,7 @@ scheduler = BackgroundScheduler()
 # 매일 특정 시간에 작업 예약 (예: 매일 오전 9시에 실행)
 feed_url = "https://www.mk.co.kr/rss/50300009/"
 
-scheduler.add_job(daily_update, 'cron', hour=9, minute=0)
+scheduler.add_job(daily_update, 'cron', hour=9, minute=0, args = [feed_url,])
 
 if __name__ == '__main__':
     # 스케줄러 시작
