@@ -5,13 +5,13 @@ from trafilatura import feeds, fetch_url, extract
 
 class Crawler(ABC):
     @abstractmethod
-    def crawl(self, url):
+    def collect(self, url):
         raise NotImplementedError
 
 
 class TrafilaturaCrawler(Crawler):
 
-    def crawl(self, url) -> list[str]:
+    def collect(self, url) -> list[str]:
         contents = []
         feed_list = feeds.find_feed_urls(url)
         

@@ -17,3 +17,10 @@ Prompt
 
 
 - [ ] : https 붙이기
+
+크롤링 -> preprocess -> 벡터 DB에 저장
+
+preprocess: 길이가 길어질 경우, 잘라서 요약
+preprocess 부분: 어떤 식으로 저장되는 게 좋을까?
+
+요약 저장 시에, 날짜와 관련 지역, 키워드 등으로 정리

@@ -28,7 +28,7 @@ updater = ChromaDailyUpdater(repo)
 
 
 def daily_update(url: str):
-    parse_contents = crawler.crawl(url)
+    parse_contents = crawler.collect(url)
     # preprocessed_contents = 
     parse_contents = [Document(content) for content in parse_contents]
     
