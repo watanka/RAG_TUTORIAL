@@ -12,7 +12,6 @@ pip install langchain openai faiss-cpu tiktoken
 from operator import itemgetter
 from typing import List, Tuple
 from dotenv import load_dotenv
-from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from langchain_chroma import Chroma
 from langchain_core.output_parsers import StrOutputParser
