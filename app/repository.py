@@ -12,6 +12,10 @@ class DB(ABC):
     def get_emails(self) -> list:
         pass
 
+    @abstractmethod
+    def delete_email(self):
+        pass
+
 class SQLiteEmailDatabase(DB):
     def __init__(self, db_name: str = "emails.db"):
         self.conn = sqlite3.connect(db_name)
@@ -93,8 +97,8 @@ class EmailRepository:
     def get_emails(self) -> list:
         return self.db.get_emails()
     
-    def remove_emails(Self) -> None:
-        self.db
+    def remove_emails(self, email: str) -> None:
+        self.db.delete_email(email)
     
 
 if __name__ == '__main__':
