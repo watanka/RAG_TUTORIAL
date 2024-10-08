@@ -17,5 +17,5 @@ class ChromaDailyUpdater(DailyUpdater):
     def __init__(self, repository):
         self.repository = repository
 
-    def update(self, contents):
-        self.repository.add(contents)
+    def update(self, contents, ids):
+        self.repository.add(contents, ids = ids)
