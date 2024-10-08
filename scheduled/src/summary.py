@@ -75,19 +75,14 @@ def summarize(doc_str):
     docs = Document(page_content=doc_str,
                     metadata = {'collect_date': formatted_date_time}
                     )
-    # print('docs=====\n', docs)
-    print(type(docs))
     split_docs = text_splitter.split_documents([docs])
-    print('split_docs=====\n', split_docs)
-    summary = map_reduce_chain.run(split_docs)
+    summary = map_reduce_chain.invoke(split_docs)
     return summary
 
 
-if __name__ == '__main__':
-    from crawl import TrafilaturaCrawler
-    crawler = TrafilaturaCrawler()
-    feed_url = "https://www.mk.co.kr/rss/50300009/"
+def write_newsletter(db, date: str):
+    '''
+    db에서 조건(날짜, 지역 등)에 속하는 정보들을 쿼리해옴.
+    '''
+    pass
 
-    contents = crawler.collect(feed_url)
-
-    print(summarize(contents[0]))
